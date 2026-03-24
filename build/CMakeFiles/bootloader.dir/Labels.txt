@@ -1,0 +1,13 @@
+# Target labels
+ bootloader
+# Source files and their labels
+/home/manohar/bt-headphones/build/CMakeFiles/bootloader
+/home/manohar/bt-headphones/build/CMakeFiles/bootloader.rule
+/home/manohar/bt-headphones/build/CMakeFiles/bootloader-complete.rule
+/home/manohar/bt-headphones/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+/home/manohar/bt-headphones/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+/home/manohar/bt-headphones/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+/home/manohar/bt-headphones/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+/home/manohar/bt-headphones/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+/home/manohar/bt-headphones/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+/home/manohar/bt-headphones/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule

@@ -1,0 +1,2 @@
+source /home/manohar/bt-headphones/build/gdbinit/symbols
+source /home/manohar/bt-headphones/build/gdbinit/connect
