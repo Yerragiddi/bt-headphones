@@ -1,7 +1,0 @@
-"-specs=/home/manohar/projects/esp32/bt-headphones/build/bootloader/specs/picolibc.specs"
--Wno-frame-address
--mlongcalls
--fno-builtin-memcpy
--fno-builtin-memset
--fno-builtin-bzero
--fno-rtti

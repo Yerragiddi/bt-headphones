@@ -1,2 +1,0 @@
-source /home/manohar/projects/esp32/bt-headphones/build/bootloader/gdbinit/symbols
-source /home/manohar/projects/esp32/bt-headphones/build/bootloader/gdbinit/connect
