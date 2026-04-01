@@ -1,4 +1,4 @@
-# Install script for directory: /home/manohar/bt-headphones/components/led
+# Install script for directory: /home/manohar/projects/esp32/bt-headphones/components/led
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

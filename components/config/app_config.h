@@ -19,4 +19,4 @@
 #define I2S_NUM_0        0
 
 // ── Bluetooth ──────────────────────────────────────────
-#define BT_DEVICE_NAME   "ESP32 Headphones"
+#define BT_DEVICE_NAME   "Yerragiddi Speaker"

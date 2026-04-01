@@ -1,4 +1,4 @@
-# Install script for directory: /home/manohar/bt-headphones/components/i2s_audio
+# Install script for directory: /home/manohar/projects/esp32/bt-headphones/components/i2s_audio
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

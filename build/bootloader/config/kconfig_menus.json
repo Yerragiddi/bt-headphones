@@ -1763,6 +1763,16 @@
         "children": [],
         "depends_on": null,
         "help": null,
+        "id": "SOC_PM_RTC_NOT_SUPPORT_UART2_WAKEUP",
+        "name": "SOC_PM_RTC_NOT_SUPPORT_UART2_WAKEUP",
+        "range": null,
+        "title": null,
+        "type": "bool"
+    },
+    {
+        "children": [],
+        "depends_on": null,
+        "help": null,
         "id": "SOC_CLK_APLL_SUPPORTED",
         "name": "SOC_CLK_APLL_SUPPORTED",
         "range": null,
@@ -1995,6 +2005,16 @@
         "help": null,
         "id": "SOC_EMAC_RMII_CLK_OUT_INTERNAL_LOOPBACK",
         "name": "SOC_EMAC_RMII_CLK_OUT_INTERNAL_LOOPBACK",
+        "range": null,
+        "title": null,
+        "type": "bool"
+    },
+    {
+        "children": [],
+        "depends_on": null,
+        "help": null,
+        "id": "SOC_EMAC_REF_CLK_FROM_APLL",
+        "name": "SOC_EMAC_REF_CLK_FROM_APLL",
         "range": null,
         "title": null,
         "type": "bool"
@@ -3412,11 +3432,11 @@
                     {
                         "children": [],
                         "depends_on": "SECURE_SIGNED_APPS_ECDSA_V2_SCHEME && <choice SECURE_BOOT_ECDSA_KEY_LEN_SIZE>",
-                        "help": null,
+                        "help": "This legacy option is not recommended for new designs. Prefer NISTP256 or NISTP384.",
                         "id": "SECURE_BOOT_ECDSA_KEY_LEN_192_BITS",
                         "name": "SECURE_BOOT_ECDSA_KEY_LEN_192_BITS",
                         "range": null,
-                        "title": "Using ECC curve NISTP192",
+                        "title": "Using ECC curve NISTP192 (Legacy, not recommended)",
                         "type": "bool"
                     },
                     {
@@ -3441,7 +3461,7 @@
                     }
                 ],
                 "depends_on": "SECURE_SIGNED_APPS_ECDSA_V2_SCHEME",
-                "help": "Select the ECDSA key size. Three key sizes are supported depending upon on the target:\n\n- 192 bit key using NISTP192 curve\n- 256 bit key using NISTP256 curve (Recommended)\n- 384 bit key using NISTP384 curve (Recommended)\n\nThe advantage of using 384 and 256 bit keys is the extra randomness which makes it difficult to be\nbruteforced compared to 192 bit key.\nAt present, both key sizes are practically implausible to bruteforce.",
+                "help": "Select the ECDSA key size. Three key sizes are supported depending upon on the target:\n\n- 192 bit key using NISTP192 curve (Legacy, not recommended)\n- 256 bit key using NISTP256 curve (Recommended)\n- 384 bit key using NISTP384 curve (Recommended)\n\nThe advantage of using 384 and 256 bit keys is the extra randomness which makes it difficult to be\nbruteforced compared to 192 bit key.\nAt present, both key sizes are practically implausible to bruteforce.",
                 "id": "security-features-ecdsa-key-size-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-559",
                 "name": "SECURE_BOOT_ECDSA_KEY_LEN_SIZE",
                 "title": "ECDSA key size",
@@ -3494,7 +3514,7 @@
                         ],
                         "depends_on": "SECURE_BOOT",
                         "help": "Select the Secure Boot Version. Depends on the Chip Revision.\nSecure Boot V2 is the new RSA / ECDSA based secure boot scheme.\n\n    - RSA based scheme is supported in ESP32 (Revision 3 onwards), ESP32-S2, ESP32-C3 (ECO3), ESP32-S3.\n    - ECDSA based scheme is supported in ESP32-C2 SoC.\n\nPlease note that, RSA or ECDSA secure boot is property of specific SoC based on its HW design, supported\ncrypto accelerators, die-size, cost and similar parameters. Please note that RSA scheme has requirement\nfor bigger key sizes but at the same time it is comparatively faster than ECDSA verification.\n\nSecure Boot V1 is the AES based (custom) secure boot scheme supported in ESP32 SoC.",
-                        "id": "security-features-enable-hardware-secure-boot-in-bootloader-read-docs-first--select-secure-boot-version-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-629",
+                        "id": "security-features-enable-hardware-secure-boot-in-bootloader-read-docs-first--select-secure-boot-version-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-631",
                         "name": "SECURE_BOOT_VERSION",
                         "title": "Select secure boot version",
                         "type": "choice"
@@ -3533,7 +3553,7 @@
                 ],
                 "depends_on": "SECURE_BOOT_V1_ENABLED",
                 "help": null,
-                "id": "security-features-secure-bootloader-mode-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-662",
+                "id": "security-features-secure-bootloader-mode-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-664",
                 "name": "SECURE_BOOTLOADER_MODE",
                 "title": "Secure bootloader mode",
                 "type": "choice"
@@ -3543,7 +3563,7 @@
                     {
                         "children": [],
                         "depends_on": "SECURE_BOOT_BUILD_SIGNED_BINARIES",
-                        "help": "Path to the key file used to sign app images.\n\nKey file is an ECDSA private key (NIST256p curve) in PEM format for Secure Boot V1.\nKey file is an RSA private key in PEM format for Secure Boot V2.\n\nPath is evaluated relative to the project directory.\n\nYou can generate a new signing key by running the following command:\nespsecure generate-signing-key secure_boot_signing_key.pem\n\nSee the Secure Boot section of the ESP-IDF Programmer's Guide for this version for details.",
+                        "help": "Path to the key file used to sign app images.\n\nKey file is an ECDSA private key (NIST256p curve) in PEM format for Secure Boot V1.\nKey file is an RSA private key in PEM format for Secure Boot V2 (RSA scheme).\nKey file is an ECDSA private key (NIST 192p, 256p or 384p) in PEM format for Secure Boot V2 (ECDSA scheme).\n\nPath is evaluated relative to the project directory.\n\nYou can generate a new signing key by running the following command:\nespsecure generate-signing-key secure_boot_signing_key.pem\n\nSee the Secure Boot section of the ESP-IDF Programmer's Guide for this version for details.",
                         "id": "SECURE_BOOT_SIGNING_KEY",
                         "name": "SECURE_BOOT_SIGNING_KEY",
                         "range": null,
@@ -3624,7 +3644,7 @@
                 ],
                 "depends_on": "SECURE_BOOTLOADER_REFLASHABLE",
                 "help": "In reflashable secure bootloader mode, a hardware key is derived from the signing key (with SHA-256) and\ncan be written to eFuse with espefuse.\n\nNormally this is a 256-bit key, but if 3/4 Coding Scheme is used on the device then the eFuse key is\ntruncated to 192 bits.\n\nThis configuration item doesn't change any firmware code, it only changes the size of key binary which is\ngenerated at build time.",
-                "id": "security-features-hardware-key-encoding-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-795",
+                "id": "security-features-hardware-key-encoding-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-798",
                 "name": "SECURE_BOOTLOADER_KEY_ENCODING",
                 "title": "Hardware Key Encoding",
                 "type": "choice"
@@ -3666,7 +3686,7 @@
                         ],
                         "depends_on": "SECURE_FLASH_ENC_ENABLED",
                         "help": "Specify the key source for the Flash Encryption Key",
-                        "id": "security-features-enable-flash-encryption-on-boot-read-docs-first--flash-encryption-key-source-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-843",
+                        "id": "security-features-enable-flash-encryption-on-boot-read-docs-first--flash-encryption-key-source-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-846",
                         "name": "SECURE_FLASH_ENCRYPTION_KEY_SOURCE",
                         "title": "Flash Encryption Key Source",
                         "type": "choice"
@@ -3706,7 +3726,7 @@
                         ],
                         "depends_on": "SOC_FLASH_ENCRYPTION_XTS_AES_OPTIONS && SECURE_FLASH_ENC_ENABLED",
                         "help": "Size of generated XTS-AES key.\n\n- AES-128 uses a 256-bit key (32 bytes) derived from 128 bits (16 bytes) burned in half Efuse key block.\n  Internally, it calculates SHA256(128 bits)\n- AES-128 uses a 256-bit key (32 bytes) which occupies one Efuse key block.\n- AES-256 uses a 512-bit key (64 bytes) which occupies two Efuse key blocks.\n\nThis setting is ignored if either type of key is already burned to Efuse before the first boot.\nIn this case, the pre-burned key is used and no new key is generated.",
-                        "id": "security-features-enable-flash-encryption-on-boot-read-docs-first--size-of-generated-xts-aes-key-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-863",
+                        "id": "security-features-enable-flash-encryption-on-boot-read-docs-first--size-of-generated-xts-aes-key-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-866",
                         "name": "SECURE_FLASH_ENCRYPTION_KEYSIZE",
                         "title": "Size of generated XTS-AES key",
                         "type": "choice"
@@ -3736,7 +3756,7 @@
                         ],
                         "depends_on": "SECURE_FLASH_ENC_ENABLED",
                         "help": "By default Development mode is enabled which allows ROM download mode to perform flash encryption\noperations (plaintext is sent to the device, and it encrypts it internally and writes ciphertext\nto flash.) This mode is not secure, it's possible for an attacker to write their own chosen plaintext\nto flash.\n\nRelease mode should always be selected for production or manufacturing. Once enabled it's no longer\npossible for the device in ROM Download Mode to use the flash encryption hardware.\n\nWhen EFUSE_VIRTUAL is enabled, SECURE_FLASH_ENCRYPTION_MODE_RELEASE is not available.\nFor CI tests we use IDF_CI_BUILD to bypass it (\"export IDF_CI_BUILD=1\").\nWe do not recommend bypassing it for other purposes.\n\nRefer to the Flash Encryption section of the ESP-IDF Programmer's Guide for details.",
-                        "id": "security-features-enable-flash-encryption-on-boot-read-docs-first--enable-usage-mode-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-896",
+                        "id": "security-features-enable-flash-encryption-on-boot-read-docs-first--enable-usage-mode-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-899",
                         "name": "SECURE_FLASH_ENCRYPTION_MODE",
                         "title": "Enable usage mode",
                         "type": "choice"
@@ -3874,7 +3894,7 @@
                     }
                 ],
                 "depends_on": null,
-                "id": "security-features-potentially-insecure-options-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-930",
+                "id": "security-features-potentially-insecure-options-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-933",
                 "title": "Potentially insecure options",
                 "type": "menu"
             },
@@ -3935,7 +3955,7 @@
                         ],
                         "depends_on": "SECURE_FLASH_PSEUDO_ROUND_FUNC",
                         "help": "The strength of the pseudo rounds functions can be configured to low, medium and high,\neach denoting the values that would be stored in the efuses field.\nBy default the value to set to low.\n\nIt is recommended that the required strength of the pseudo rounds function should be set during the\nfirst boot itself. If your workflow needs to update the function's strength after the first boot,\nyou should enable CONFIG_SECURE_BOOT_SKIP_WRITE_PROTECTION_SCA to avoid write protecting this\nbit during the boot up for targets that support Secure Boot using ECDSA-P384.\n\nYou can configure the strength of the pseudo rounds functions according to your use cases,\nfor example, increasing the strength would provide higher security but would slow down the\nflash encryption/decryption operations.\nFor more info regarding the performance impact, please checkout the pseudo round function section of the\nsecurity guide documentation.",
-                        "id": "security-features-permanently-enable-xts-aes-s-pseudo-rounds-function-strength-of-the-pseudo-rounds-function-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-1156",
+                        "id": "security-features-permanently-enable-xts-aes-s-pseudo-rounds-function-strength-of-the-pseudo-rounds-function-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-1159",
                         "name": "SECURE_FLASH_PSEUDO_ROUND_FUNC_STRENGTH",
                         "title": "Strength of the pseudo rounds function",
                         "type": "choice"
@@ -4004,7 +4024,7 @@
                 ],
                 "depends_on": "(SECURE_BOOT_V2_ENABLED || SECURE_FLASH_ENC_ENABLED) && !(IDF_TARGET_ESP32 && ESP32_REV_MIN_FULL < 300)",
                 "help": null,
-                "id": "security-features-uart-rom-download-mode-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-1196",
+                "id": "security-features-uart-rom-download-mode-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-1199",
                 "name": "SECURE_UART_ROM_DL_MODE",
                 "title": "UART ROM download mode",
                 "type": "choice"
@@ -4223,6 +4243,16 @@
         "help": null,
         "id": "ESP_ROM_HAS_OUTPUT_PUTC_FUNC",
         "name": "ESP_ROM_HAS_OUTPUT_PUTC_FUNC",
+        "range": null,
+        "title": null,
+        "type": "bool"
+    },
+    {
+        "children": [],
+        "depends_on": null,
+        "help": null,
+        "id": "ESP_ROM_HAS_REGI2C_IMPL",
+        "name": "ESP_ROM_HAS_REGI2C_IMPL",
         "range": null,
         "title": null,
         "type": "bool"

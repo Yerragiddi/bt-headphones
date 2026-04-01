@@ -18,8 +18,8 @@ end
 
 # Load bootloader symbols
 set confirm off
-    add-symbol-file /home/manohar/bt-headphones/build/bootloader/bootloader.elf
+    add-symbol-file /home/manohar/projects/esp32/bt-headphones/build/bootloader/bootloader.elf
 set confirm on
 
 # Load application symbols
-file /home/manohar/bt-headphones/build/bt_headphones.elf
+file /home/manohar/projects/esp32/bt-headphones/build/bt_headphones.elf

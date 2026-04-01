@@ -1763,6 +1763,16 @@
         "children": [],
         "depends_on": null,
         "help": null,
+        "id": "SOC_PM_RTC_NOT_SUPPORT_UART2_WAKEUP",
+        "name": "SOC_PM_RTC_NOT_SUPPORT_UART2_WAKEUP",
+        "range": null,
+        "title": null,
+        "type": "bool"
+    },
+    {
+        "children": [],
+        "depends_on": null,
+        "help": null,
         "id": "SOC_CLK_APLL_SUPPORTED",
         "name": "SOC_CLK_APLL_SUPPORTED",
         "range": null,
@@ -1995,6 +2005,16 @@
         "help": null,
         "id": "SOC_EMAC_RMII_CLK_OUT_INTERNAL_LOOPBACK",
         "name": "SOC_EMAC_RMII_CLK_OUT_INTERNAL_LOOPBACK",
+        "range": null,
+        "title": null,
+        "type": "bool"
+    },
+    {
+        "children": [],
+        "depends_on": null,
+        "help": null,
+        "id": "SOC_EMAC_REF_CLK_FROM_APLL",
+        "name": "SOC_EMAC_REF_CLK_FROM_APLL",
         "range": null,
         "title": null,
         "type": "bool"
@@ -2405,6 +2425,24 @@
         "depends_on": null,
         "id": "build-type-home-manohar-esp-idf-Kconfig-182",
         "title": "Build type",
+        "type": "menu"
+    },
+    {
+        "children": [
+            {
+                "children": [],
+                "depends_on": "SECURE_SIGNED_ON_UPDATE_NO_SECURE_BOOT || SECURE_SIGNED_APPS",
+                "help": "If set, the Data partition images will be verified during OTA updates.\nOnly partitions with subtype ESP_PARTITION_SUBTYPE_DATA_UNDEFINED will be verified.",
+                "id": "SECURE_SIGNED_DATA_PARTITION",
+                "name": "SECURE_SIGNED_DATA_PARTITION",
+                "range": null,
+                "title": "Require signed Data partition images",
+                "type": "bool"
+            }
+        ],
+        "depends_on": null,
+        "id": "app-update-config-home-manohar-esp-idf-components-app_update-Kconfig.projbuild-1",
+        "title": "App Update config",
         "type": "menu"
     },
     {
@@ -3412,11 +3450,11 @@
                     {
                         "children": [],
                         "depends_on": "SECURE_SIGNED_APPS_ECDSA_V2_SCHEME && <choice SECURE_BOOT_ECDSA_KEY_LEN_SIZE>",
-                        "help": null,
+                        "help": "This legacy option is not recommended for new designs. Prefer NISTP256 or NISTP384.",
                         "id": "SECURE_BOOT_ECDSA_KEY_LEN_192_BITS",
                         "name": "SECURE_BOOT_ECDSA_KEY_LEN_192_BITS",
                         "range": null,
-                        "title": "Using ECC curve NISTP192",
+                        "title": "Using ECC curve NISTP192 (Legacy, not recommended)",
                         "type": "bool"
                     },
                     {
@@ -3441,7 +3479,7 @@
                     }
                 ],
                 "depends_on": "SECURE_SIGNED_APPS_ECDSA_V2_SCHEME",
-                "help": "Select the ECDSA key size. Three key sizes are supported depending upon on the target:\n\n- 192 bit key using NISTP192 curve\n- 256 bit key using NISTP256 curve (Recommended)\n- 384 bit key using NISTP384 curve (Recommended)\n\nThe advantage of using 384 and 256 bit keys is the extra randomness which makes it difficult to be\nbruteforced compared to 192 bit key.\nAt present, both key sizes are practically implausible to bruteforce.",
+                "help": "Select the ECDSA key size. Three key sizes are supported depending upon on the target:\n\n- 192 bit key using NISTP192 curve (Legacy, not recommended)\n- 256 bit key using NISTP256 curve (Recommended)\n- 384 bit key using NISTP384 curve (Recommended)\n\nThe advantage of using 384 and 256 bit keys is the extra randomness which makes it difficult to be\nbruteforced compared to 192 bit key.\nAt present, both key sizes are practically implausible to bruteforce.",
                 "id": "security-features-ecdsa-key-size-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-559",
                 "name": "SECURE_BOOT_ECDSA_KEY_LEN_SIZE",
                 "title": "ECDSA key size",
@@ -3494,7 +3532,7 @@
                         ],
                         "depends_on": "SECURE_BOOT",
                         "help": "Select the Secure Boot Version. Depends on the Chip Revision.\nSecure Boot V2 is the new RSA / ECDSA based secure boot scheme.\n\n    - RSA based scheme is supported in ESP32 (Revision 3 onwards), ESP32-S2, ESP32-C3 (ECO3), ESP32-S3.\n    - ECDSA based scheme is supported in ESP32-C2 SoC.\n\nPlease note that, RSA or ECDSA secure boot is property of specific SoC based on its HW design, supported\ncrypto accelerators, die-size, cost and similar parameters. Please note that RSA scheme has requirement\nfor bigger key sizes but at the same time it is comparatively faster than ECDSA verification.\n\nSecure Boot V1 is the AES based (custom) secure boot scheme supported in ESP32 SoC.",
-                        "id": "security-features-enable-hardware-secure-boot-in-bootloader-read-docs-first--select-secure-boot-version-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-629",
+                        "id": "security-features-enable-hardware-secure-boot-in-bootloader-read-docs-first--select-secure-boot-version-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-631",
                         "name": "SECURE_BOOT_VERSION",
                         "title": "Select secure boot version",
                         "type": "choice"
@@ -3533,7 +3571,7 @@
                 ],
                 "depends_on": "SECURE_BOOT_V1_ENABLED",
                 "help": null,
-                "id": "security-features-secure-bootloader-mode-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-662",
+                "id": "security-features-secure-bootloader-mode-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-664",
                 "name": "SECURE_BOOTLOADER_MODE",
                 "title": "Secure bootloader mode",
                 "type": "choice"
@@ -3543,7 +3581,7 @@
                     {
                         "children": [],
                         "depends_on": "SECURE_BOOT_BUILD_SIGNED_BINARIES",
-                        "help": "Path to the key file used to sign app images.\n\nKey file is an ECDSA private key (NIST256p curve) in PEM format for Secure Boot V1.\nKey file is an RSA private key in PEM format for Secure Boot V2.\n\nPath is evaluated relative to the project directory.\n\nYou can generate a new signing key by running the following command:\nespsecure generate-signing-key secure_boot_signing_key.pem\n\nSee the Secure Boot section of the ESP-IDF Programmer's Guide for this version for details.",
+                        "help": "Path to the key file used to sign app images.\n\nKey file is an ECDSA private key (NIST256p curve) in PEM format for Secure Boot V1.\nKey file is an RSA private key in PEM format for Secure Boot V2 (RSA scheme).\nKey file is an ECDSA private key (NIST 192p, 256p or 384p) in PEM format for Secure Boot V2 (ECDSA scheme).\n\nPath is evaluated relative to the project directory.\n\nYou can generate a new signing key by running the following command:\nespsecure generate-signing-key secure_boot_signing_key.pem\n\nSee the Secure Boot section of the ESP-IDF Programmer's Guide for this version for details.",
                         "id": "SECURE_BOOT_SIGNING_KEY",
                         "name": "SECURE_BOOT_SIGNING_KEY",
                         "range": null,
@@ -3624,7 +3662,7 @@
                 ],
                 "depends_on": "SECURE_BOOTLOADER_REFLASHABLE",
                 "help": "In reflashable secure bootloader mode, a hardware key is derived from the signing key (with SHA-256) and\ncan be written to eFuse with espefuse.\n\nNormally this is a 256-bit key, but if 3/4 Coding Scheme is used on the device then the eFuse key is\ntruncated to 192 bits.\n\nThis configuration item doesn't change any firmware code, it only changes the size of key binary which is\ngenerated at build time.",
-                "id": "security-features-hardware-key-encoding-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-795",
+                "id": "security-features-hardware-key-encoding-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-798",
                 "name": "SECURE_BOOTLOADER_KEY_ENCODING",
                 "title": "Hardware Key Encoding",
                 "type": "choice"
@@ -3666,7 +3704,7 @@
                         ],
                         "depends_on": "SECURE_FLASH_ENC_ENABLED",
                         "help": "Specify the key source for the Flash Encryption Key",
-                        "id": "security-features-enable-flash-encryption-on-boot-read-docs-first--flash-encryption-key-source-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-843",
+                        "id": "security-features-enable-flash-encryption-on-boot-read-docs-first--flash-encryption-key-source-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-846",
                         "name": "SECURE_FLASH_ENCRYPTION_KEY_SOURCE",
                         "title": "Flash Encryption Key Source",
                         "type": "choice"
@@ -3706,7 +3744,7 @@
                         ],
                         "depends_on": "SOC_FLASH_ENCRYPTION_XTS_AES_OPTIONS && SECURE_FLASH_ENC_ENABLED",
                         "help": "Size of generated XTS-AES key.\n\n- AES-128 uses a 256-bit key (32 bytes) derived from 128 bits (16 bytes) burned in half Efuse key block.\n  Internally, it calculates SHA256(128 bits)\n- AES-128 uses a 256-bit key (32 bytes) which occupies one Efuse key block.\n- AES-256 uses a 512-bit key (64 bytes) which occupies two Efuse key blocks.\n\nThis setting is ignored if either type of key is already burned to Efuse before the first boot.\nIn this case, the pre-burned key is used and no new key is generated.",
-                        "id": "security-features-enable-flash-encryption-on-boot-read-docs-first--size-of-generated-xts-aes-key-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-863",
+                        "id": "security-features-enable-flash-encryption-on-boot-read-docs-first--size-of-generated-xts-aes-key-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-866",
                         "name": "SECURE_FLASH_ENCRYPTION_KEYSIZE",
                         "title": "Size of generated XTS-AES key",
                         "type": "choice"
@@ -3736,7 +3774,7 @@
                         ],
                         "depends_on": "SECURE_FLASH_ENC_ENABLED",
                         "help": "By default Development mode is enabled which allows ROM download mode to perform flash encryption\noperations (plaintext is sent to the device, and it encrypts it internally and writes ciphertext\nto flash.) This mode is not secure, it's possible for an attacker to write their own chosen plaintext\nto flash.\n\nRelease mode should always be selected for production or manufacturing. Once enabled it's no longer\npossible for the device in ROM Download Mode to use the flash encryption hardware.\n\nWhen EFUSE_VIRTUAL is enabled, SECURE_FLASH_ENCRYPTION_MODE_RELEASE is not available.\nFor CI tests we use IDF_CI_BUILD to bypass it (\"export IDF_CI_BUILD=1\").\nWe do not recommend bypassing it for other purposes.\n\nRefer to the Flash Encryption section of the ESP-IDF Programmer's Guide for details.",
-                        "id": "security-features-enable-flash-encryption-on-boot-read-docs-first--enable-usage-mode-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-896",
+                        "id": "security-features-enable-flash-encryption-on-boot-read-docs-first--enable-usage-mode-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-899",
                         "name": "SECURE_FLASH_ENCRYPTION_MODE",
                         "title": "Enable usage mode",
                         "type": "choice"
@@ -3874,7 +3912,7 @@
                     }
                 ],
                 "depends_on": null,
-                "id": "security-features-potentially-insecure-options-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-930",
+                "id": "security-features-potentially-insecure-options-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-933",
                 "title": "Potentially insecure options",
                 "type": "menu"
             },
@@ -3935,7 +3973,7 @@
                         ],
                         "depends_on": "SECURE_FLASH_PSEUDO_ROUND_FUNC",
                         "help": "The strength of the pseudo rounds functions can be configured to low, medium and high,\neach denoting the values that would be stored in the efuses field.\nBy default the value to set to low.\n\nIt is recommended that the required strength of the pseudo rounds function should be set during the\nfirst boot itself. If your workflow needs to update the function's strength after the first boot,\nyou should enable CONFIG_SECURE_BOOT_SKIP_WRITE_PROTECTION_SCA to avoid write protecting this\nbit during the boot up for targets that support Secure Boot using ECDSA-P384.\n\nYou can configure the strength of the pseudo rounds functions according to your use cases,\nfor example, increasing the strength would provide higher security but would slow down the\nflash encryption/decryption operations.\nFor more info regarding the performance impact, please checkout the pseudo round function section of the\nsecurity guide documentation.",
-                        "id": "security-features-permanently-enable-xts-aes-s-pseudo-rounds-function-strength-of-the-pseudo-rounds-function-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-1156",
+                        "id": "security-features-permanently-enable-xts-aes-s-pseudo-rounds-function-strength-of-the-pseudo-rounds-function-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-1159",
                         "name": "SECURE_FLASH_PSEUDO_ROUND_FUNC_STRENGTH",
                         "title": "Strength of the pseudo rounds function",
                         "type": "choice"
@@ -4004,7 +4042,7 @@
                 ],
                 "depends_on": "(SECURE_BOOT_V2_ENABLED || SECURE_FLASH_ENC_ENABLED) && !(IDF_TARGET_ESP32 && ESP32_REV_MIN_FULL < 300)",
                 "help": null,
-                "id": "security-features-uart-rom-download-mode-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-1196",
+                "id": "security-features-uart-rom-download-mode-home-manohar-esp-idf-components-bootloader-Kconfig.projbuild-1199",
                 "name": "SECURE_UART_ROM_DL_MODE",
                 "title": "UART ROM download mode",
                 "type": "choice"
@@ -4223,6 +4261,16 @@
         "help": null,
         "id": "ESP_ROM_HAS_OUTPUT_PUTC_FUNC",
         "name": "ESP_ROM_HAS_OUTPUT_PUTC_FUNC",
+        "range": null,
+        "title": null,
+        "type": "bool"
+    },
+    {
+        "children": [],
+        "depends_on": null,
+        "help": null,
+        "id": "ESP_ROM_HAS_REGI2C_IMPL",
+        "name": "ESP_ROM_HAS_REGI2C_IMPL",
         "range": null,
         "title": null,
         "type": "bool"
@@ -5591,6 +5639,16 @@
                             {
                                 "children": [
                                     {
+                                        "children": [],
+                                        "depends_on": "BT_CLASSIC_ENABLED && BT_BLUEDROID_ENABLED",
+                                        "help": "Enable Espressif Vendor-specific HCI commands for power control of Classic Bluetooth",
+                                        "id": "BT_CLASSIC_ENABLE_POWER_CTRL_VSC",
+                                        "name": "BT_CLASSIC_ENABLE_POWER_CTRL_VSC",
+                                        "range": null,
+                                        "title": "Enable Espressif Vendor-specific HCI commands for power control of Classic Bluetooth",
+                                        "type": "bool"
+                                    },
+                                    {
                                         "children": [
                                             {
                                                 "children": [],
@@ -5625,7 +5683,7 @@
                                         ],
                                         "depends_on": "BT_CLASSIC_ENABLED && BT_BLUEDROID_ENABLED",
                                         "help": "This chooses the support status of configuring encryption key size",
-                                        "id": "component-config-bluetooth-bluedroid-options-classic-bluetooth-configure-encryption-key-size-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-51",
+                                        "id": "component-config-bluetooth-bluedroid-options-classic-bluetooth-configure-encryption-key-size-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-58",
                                         "name": "BT_ENC_KEY_SIZE_CTRL_ENABLED",
                                         "title": "configure encryption key size",
                                         "type": "choice"
@@ -5676,7 +5734,7 @@
                                                     }
                                                 ],
                                                 "depends_on": "BT_AVRCP_ENABLED && BT_BLUEDROID_ENABLED",
-                                                "id": "component-config-bluetooth-bluedroid-options-classic-bluetooth-a2dp-avrcp-features-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-102",
+                                                "id": "component-config-bluetooth-bluedroid-options-classic-bluetooth-a2dp-avrcp-features-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-109",
                                                 "title": "AVRCP Features",
                                                 "type": "menu"
                                             }
@@ -5792,7 +5850,7 @@
                                                 ],
                                                 "depends_on": "BT_HFP_ENABLE && BT_BLUEDROID_ENABLED",
                                                 "help": "SCO data path, i.e. HCI or PCM. This option is set using API\n\"esp_bredr_sco_datapath_set\" in Bluetooth host. Default SCO data\npath can also be set in Bluetooth Controller.",
-                                                "id": "component-config-bluetooth-bluedroid-options-classic-bluetooth-hands-free-handset-profile-audio-sco-data-path-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-177",
+                                                "id": "component-config-bluetooth-bluedroid-options-classic-bluetooth-hands-free-handset-profile-audio-sco-data-path-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-184",
                                                 "name": "BT_HFP_AUDIO_DATA_PATH",
                                                 "title": "audio(SCO) data path",
                                                 "type": "choice"
@@ -6006,7 +6064,7 @@
                                                 ],
                                                 "depends_on": "BT_GATTS_ENABLE && BT_BLUEDROID_ENABLED",
                                                 "help": "Service change indication mode for GATT Server.",
-                                                "id": "component-config-bluetooth-bluedroid-options-bluetooth-low-energy-include-gatt-server-module-gatts--gatts-service-change-mode-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-323",
+                                                "id": "component-config-bluetooth-bluedroid-options-bluetooth-low-energy-include-gatt-server-module-gatts--gatts-service-change-mode-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-330",
                                                 "name": "BT_GATTS_SEND_SERVICE_CHANGE_MODE",
                                                 "title": "GATTS Service Change Mode",
                                                 "type": "choice"
@@ -6271,7 +6329,7 @@
                                     }
                                 ],
                                 "depends_on": "BT_BLUEDROID_ENABLED",
-                                "id": "component-config-bluetooth-bluedroid-options-bluedroid-debug-option-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-487",
+                                "id": "component-config-bluetooth-bluedroid-options-bluedroid-debug-option-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-494",
                                 "title": "Bluedroid debug option",
                                 "type": "menu"
                             },
@@ -6362,7 +6420,7 @@
                                         ],
                                         "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
                                         "help": "Define BT trace level for HCI layer",
-                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-hci-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-539",
+                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-hci-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-546",
                                         "name": "BT_LOG_HCI_TRACE_LEVEL",
                                         "title": "HCI layer",
                                         "type": "choice"
@@ -6452,7 +6510,7 @@
                                         ],
                                         "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
                                         "help": "Define BT trace level for BTM layer",
-                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-btm-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-574",
+                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-btm-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-581",
                                         "name": "BT_LOG_BTM_TRACE_LEVEL",
                                         "title": "BTM layer",
                                         "type": "choice"
@@ -6542,7 +6600,7 @@
                                         ],
                                         "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
                                         "help": "Define BT trace level for L2CAP layer",
-                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-l2cap-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-609",
+                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-l2cap-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-616",
                                         "name": "BT_LOG_L2CAP_TRACE_LEVEL",
                                         "title": "L2CAP layer",
                                         "type": "choice"
@@ -6632,7 +6690,7 @@
                                         ],
                                         "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
                                         "help": "Define BT trace level for RFCOMM layer",
-                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-rfcomm-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-644",
+                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-rfcomm-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-651",
                                         "name": "BT_LOG_RFCOMM_TRACE_LEVEL",
                                         "title": "RFCOMM layer",
                                         "type": "choice"
@@ -6722,7 +6780,7 @@
                                         ],
                                         "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
                                         "help": "Define BT trace level for SDP layer",
-                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-sdp-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-679",
+                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-sdp-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-686",
                                         "name": "BT_LOG_SDP_TRACE_LEVEL",
                                         "title": "SDP layer",
                                         "type": "choice"
@@ -6812,7 +6870,7 @@
                                         ],
                                         "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
                                         "help": "Define BT trace level for GAP layer",
-                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-gap-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-714",
+                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-gap-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-721",
                                         "name": "BT_LOG_GAP_TRACE_LEVEL",
                                         "title": "GAP layer",
                                         "type": "choice"
@@ -6902,7 +6960,7 @@
                                         ],
                                         "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
                                         "help": "Define BT trace level for BNEP layer",
-                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-bnep-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-749",
+                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-bnep-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-756",
                                         "name": "BT_LOG_BNEP_TRACE_LEVEL",
                                         "title": "BNEP layer",
                                         "type": "choice"
@@ -6992,7 +7050,7 @@
                                         ],
                                         "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
                                         "help": "Define BT trace level for PAN layer",
-                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-pan-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-784",
+                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-pan-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-791",
                                         "name": "BT_LOG_PAN_TRACE_LEVEL",
                                         "title": "PAN layer",
                                         "type": "choice"
@@ -7082,7 +7140,7 @@
                                         ],
                                         "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
                                         "help": "Define BT trace level for A2D layer",
-                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-a2d-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-819",
+                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-a2d-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-826",
                                         "name": "BT_LOG_A2D_TRACE_LEVEL",
                                         "title": "A2D layer",
                                         "type": "choice"
@@ -7172,7 +7230,7 @@
                                         ],
                                         "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
                                         "help": "Define BT trace level for AVDT layer",
-                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-avdt-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-854",
+                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-avdt-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-861",
                                         "name": "BT_LOG_AVDT_TRACE_LEVEL",
                                         "title": "AVDT layer",
                                         "type": "choice"
@@ -7262,7 +7320,7 @@
                                         ],
                                         "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
                                         "help": "Define BT trace level for AVCT layer",
-                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-avct-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-889",
+                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-avct-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-896",
                                         "name": "BT_LOG_AVCT_TRACE_LEVEL",
                                         "title": "AVCT layer",
                                         "type": "choice"
@@ -7352,7 +7410,7 @@
                                         ],
                                         "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
                                         "help": "Define BT trace level for AVRC layer",
-                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-avrc-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-924",
+                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-avrc-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-931",
                                         "name": "BT_LOG_AVRC_TRACE_LEVEL",
                                         "title": "AVRC layer",
                                         "type": "choice"
@@ -7442,7 +7500,7 @@
                                         ],
                                         "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
                                         "help": "Define BT trace level for MCA layer",
-                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-mca-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-959",
+                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-mca-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-966",
                                         "name": "BT_LOG_MCA_TRACE_LEVEL",
                                         "title": "MCA layer",
                                         "type": "choice"
@@ -7532,7 +7590,7 @@
                                         ],
                                         "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
                                         "help": "Define BT trace level for HID layer",
-                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-hid-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-994",
+                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-hid-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-1001",
                                         "name": "BT_LOG_HID_TRACE_LEVEL",
                                         "title": "HID layer",
                                         "type": "choice"
@@ -7622,7 +7680,7 @@
                                         ],
                                         "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
                                         "help": "Define BT trace level for APPL layer",
-                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-appl-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-1029",
+                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-appl-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-1036",
                                         "name": "BT_LOG_APPL_TRACE_LEVEL",
                                         "title": "APPL layer",
                                         "type": "choice"
@@ -7712,7 +7770,7 @@
                                         ],
                                         "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
                                         "help": "Define BT trace level for GATT layer",
-                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-gatt-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-1064",
+                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-gatt-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-1071",
                                         "name": "BT_LOG_GATT_TRACE_LEVEL",
                                         "title": "GATT layer",
                                         "type": "choice"
@@ -7802,7 +7860,7 @@
                                         ],
                                         "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
                                         "help": "Define BT trace level for SMP layer",
-                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-smp-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-1099",
+                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-smp-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-1106",
                                         "name": "BT_LOG_SMP_TRACE_LEVEL",
                                         "title": "SMP layer",
                                         "type": "choice"
@@ -7892,7 +7950,7 @@
                                         ],
                                         "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
                                         "help": "Define BT trace level for BTIF layer",
-                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-btif-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-1134",
+                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-btif-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-1141",
                                         "name": "BT_LOG_BTIF_TRACE_LEVEL",
                                         "title": "BTIF layer",
                                         "type": "choice"
@@ -7982,7 +8040,7 @@
                                         ],
                                         "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
                                         "help": "Define BT trace level for BTC layer",
-                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-btc-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-1169",
+                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-btc-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-1176",
                                         "name": "BT_LOG_BTC_TRACE_LEVEL",
                                         "title": "BTC layer",
                                         "type": "choice"
@@ -8072,7 +8130,7 @@
                                         ],
                                         "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
                                         "help": "Define BT trace level for OSI layer",
-                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-osi-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-1204",
+                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-osi-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-1211",
                                         "name": "BT_LOG_OSI_TRACE_LEVEL",
                                         "title": "OSI layer",
                                         "type": "choice"
@@ -8162,7 +8220,7 @@
                                         ],
                                         "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
                                         "help": "Define BT trace level for BLUFI layer",
-                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-blufi-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-1239",
+                                        "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-blufi-layer-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-1246",
                                         "name": "BT_LOG_BLUFI_TRACE_LEVEL",
                                         "title": "BLUFI layer",
                                         "type": "choice"
@@ -8179,7 +8237,7 @@
                                     }
                                 ],
                                 "depends_on": "BT_BLUEDROID_ENABLED && !BT_STACK_NO_LOG && BT_BLUEDROID_ENABLED",
-                                "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-536",
+                                "id": "component-config-bluetooth-bluedroid-options-bt-debug-log-level-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-543",
                                 "title": "BT DEBUG LOG LEVEL",
                                 "type": "menu"
                             },
@@ -8486,7 +8544,7 @@
                                         ],
                                         "depends_on": "BT_BLE_FEAT_ISO_EN && BT_BLUEDROID_ENABLED",
                                         "help": "Select ISO flow control type",
-                                        "id": "component-config-bluetooth-bluedroid-options-enable-ble-5-2-iso-feature-select-iso-flow-control-type-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-1489",
+                                        "id": "component-config-bluetooth-bluedroid-options-enable-ble-5-2-iso-feature-select-iso-flow-control-type-home-manohar-esp-idf-components-bt-host-bluedroid-Kconfig.in-1496",
                                         "name": "BT_BLE_ISO_FLOW_CONTROL",
                                         "title": "Select ISO flow control type",
                                         "type": "choice"
@@ -9454,7 +9512,7 @@
                                                 "type": "bool"
                                             }
                                         ],
-                                        "depends_on": "BT_NIMBLE_ENABLED && !SOC_ESP_NIMBLE_CONTROLLER && BT_NIMBLE_ENABLED",
+                                        "depends_on": "BT_NIMBLE_ENABLED && BT_NIMBLE_STATIC_TO_DYNAMIC && BT_NIMBLE_ENABLED",
                                         "help": "When this option is enabled, mempool does not require pre-allocating memory.\nInstead, memory for each block will be dynamically allocated and released\nduring mempool usage. This can significantly reduce memory consumption\nafter mempool initialization, but may have some impact on performance.",
                                         "id": "BT_NIMBLE_MEMPOOL_RUNTIME_ALLOC",
                                         "name": "BT_NIMBLE_MEMPOOL_RUNTIME_ALLOC",
@@ -11234,7 +11292,10 @@
                                 "help": "BR/EDR default minimum size of encryption key when start encryption.",
                                 "id": "BTDM_CTRL_BR_EDR_MIN_ENC_KEY_SZ_DFT",
                                 "name": "BTDM_CTRL_BR_EDR_MIN_ENC_KEY_SZ_DFT",
-                                "range": null,
+                                "range": [
+                                    7,
+                                    16
+                                ],
                                 "title": "BR/EDR default minimum size of encryption key",
                                 "type": "int"
                             },
@@ -11244,7 +11305,10 @@
                                 "help": "BR/EDR ACL maximum connections of bluetooth controller.\nEach connection uses 1.2 KB DRAM whenever the BT controller is enabled.",
                                 "id": "BTDM_CTRL_BR_EDR_MAX_ACL_CONN",
                                 "name": "BTDM_CTRL_BR_EDR_MAX_ACL_CONN",
-                                "range": null,
+                                "range": [
+                                    1,
+                                    7
+                                ],
                                 "title": "BR/EDR ACL Max Connections",
                                 "type": "int"
                             },
@@ -11254,7 +11318,10 @@
                                 "help": "BR/EDR Synchronize maximum connections of bluetooth controller.\nEach connection uses 2 KB DRAM whenever the BT controller is enabled.",
                                 "id": "BTDM_CTRL_BR_EDR_MAX_SYNC_CONN",
                                 "name": "BTDM_CTRL_BR_EDR_MAX_SYNC_CONN",
-                                "range": null,
+                                "range": [
+                                    0,
+                                    3
+                                ],
                                 "title": "BR/EDR Sync(SCO/eSCO) Max Connections",
                                 "type": "int"
                             },
@@ -12020,16 +12087,6 @@
                             },
                             {
                                 "children": [
-                                    {
-                                        "children": [],
-                                        "depends_on": "(BT_BLE_SMP_ENABLE || BT_SMP_ENABLE) && <choice BT_SMP_CRYPTO_STACK>",
-                                        "help": "Use the built-in Bluedroid cryptographic implementation.\nThis provides compatibility with all features.\nThis option is only available for Bluedroid host.",
-                                        "id": "BT_SMP_CRYPTO_STACK_NATIVE",
-                                        "name": "BT_SMP_CRYPTO_STACK_NATIVE",
-                                        "range": null,
-                                        "title": "Native Bluedroid implementation",
-                                        "type": "bool"
-                                    },
                                     {
                                         "children": [],
                                         "depends_on": "<choice BT_SMP_CRYPTO_STACK>",
@@ -13437,7 +13494,7 @@
                                     }
                                 ],
                                 "depends_on": null,
-                                "id": "component-config-bluetooth-common-options-ble-log-home-manohar-esp-idf-components-bt-common-Kconfig.in-46",
+                                "id": "component-config-bluetooth-common-options-ble-log-home-manohar-esp-idf-components-bt-common-Kconfig.in-38",
                                 "title": "BLE Log",
                                 "type": "menu"
                             },
@@ -13868,12 +13925,12 @@
                     },
                     {
                         "children": [],
-                        "depends_on": "!BT_LE_CRYPTO_STACK_MBEDTLS && !BT_NIMBLE_CRYPTO_STACK_MBEDTLS && BLE_MESH",
-                        "help": "Enable this option to use the unified BLE tinycrypt solution\ninstead of the default one in BLE Mesh stack.",
+                        "depends_on": "BLE_MESH",
+                        "help": "This configuration path is deprecated and will be removed\nin a future version. Please use the corresponding Kconfig\noptions under $IDF_PATH/components/bt/common/Kconfig.",
                         "id": "BLE_MESH_USE_UNIFIED_CRYPTO",
                         "name": "BLE_MESH_USE_UNIFIED_CRYPTO",
                         "range": null,
-                        "title": "Use the unified BLE tinycrypt implementation",
+                        "title": "Use the unified BLE tinycrypt implementation(Deprecated)",
                         "type": "bool"
                     },
                     {
@@ -14123,7 +14180,7 @@
                         ],
                         "depends_on": "BLE_MESH",
                         "help": "Allocation strategy for BLE Mesh stack, essentially provides ability to\nallocate all required dynamic allocations from,\n\n- Internal DRAM memory only\n- External SPIRAM memory only\n- Either internal or external memory based on default malloc()\n  behavior in ESP-IDF\n- Internal IRAM memory wherever applicable else internal DRAM\n\nRecommended mode here is always internal (*), since that is most preferred\nfrom security perspective. But if application requirement does not\nallow sufficient free internal memory then alternate mode can be\nselected.\n\n(*) In case of ESP32-S2/ESP32-S3, hardware allows encryption of external\nSPIRAM contents provided hardware flash encryption feature is enabled.\nIn that case, using external SPIRAM allocation strategy is also safe choice\nfrom security perspective.",
-                        "id": "component-config-esp-ble-mesh-support-memory-allocation-strategy-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-203",
+                        "id": "component-config-esp-ble-mesh-support-memory-allocation-strategy-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-202",
                         "name": "BLE_MESH_MEM_ALLOC_MODE",
                         "title": "Memory allocation strategy",
                         "type": "choice"
@@ -14155,7 +14212,7 @@
                                 ],
                                 "depends_on": "BLE_MESH_FREERTOS_STATIC_ALLOC && BLE_MESH",
                                 "help": "Choose the memory to be used for FreeRTOS objects.",
-                                "id": "component-config-esp-ble-mesh-support-enable-freertos-static-allocation-memory-allocation-for-freertos-objects-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-260",
+                                "id": "component-config-esp-ble-mesh-support-enable-freertos-static-allocation-memory-allocation-for-freertos-objects-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-259",
                                 "name": "BLE_MESH_FREERTOS_STATIC_ALLOC_MODE",
                                 "title": "Memory allocation for FreeRTOS objects",
                                 "type": "choice"
@@ -14214,7 +14271,7 @@
                             }
                         ],
                         "depends_on": "BLE_MESH",
-                        "id": "component-config-esp-ble-mesh-support-ble-mesh-and-ble-coexistence-support-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-292",
+                        "id": "component-config-esp-ble-mesh-support-ble-mesh-and-ble-coexistence-support-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-291",
                         "title": "BLE Mesh and BLE coexistence support",
                         "type": "menu"
                     },
@@ -15092,7 +15149,7 @@
                                 ],
                                 "depends_on": "BLE_MESH && !BLE_MESH_NO_LOG && BLE_MESH && !BLE_MESH_NO_LOG && BLE_MESH",
                                 "help": "Define BLE Mesh trace level for BLE Mesh stack.",
-                                "id": "component-config-esp-ble-mesh-support-ble-mesh-stack-debug-log-level-ble_mesh_stack-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-1181",
+                                "id": "component-config-esp-ble-mesh-support-ble-mesh-stack-debug-log-level-ble_mesh_stack-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-1180",
                                 "name": "BLE_MESH_STACK_TRACE_LEVEL",
                                 "title": "BLE_MESH_STACK",
                                 "type": "choice"
@@ -15109,7 +15166,7 @@
                             }
                         ],
                         "depends_on": "BLE_MESH && !BLE_MESH_NO_LOG && BLE_MESH",
-                        "id": "component-config-esp-ble-mesh-support-ble-mesh-stack-debug-log-level-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-1178",
+                        "id": "component-config-esp-ble-mesh-support-ble-mesh-stack-debug-log-level-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-1177",
                         "title": "BLE Mesh STACK DEBUG LOG LEVEL",
                         "type": "menu"
                     },
@@ -15180,7 +15237,7 @@
                                 ],
                                 "depends_on": "BLE_MESH && !BLE_MESH_NO_LOG && BLE_MESH && !BLE_MESH_NO_LOG && BLE_MESH",
                                 "help": "Define BLE Mesh trace level for BLE Mesh net buffer.",
-                                "id": "component-config-esp-ble-mesh-support-ble-mesh-net-buf-debug-log-level-ble_mesh_net_buf-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-1218",
+                                "id": "component-config-esp-ble-mesh-support-ble-mesh-net-buf-debug-log-level-ble_mesh_net_buf-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-1217",
                                 "name": "BLE_MESH_NET_BUF_TRACE_LEVEL",
                                 "title": "BLE_MESH_NET_BUF",
                                 "type": "choice"
@@ -15197,7 +15254,7 @@
                             }
                         ],
                         "depends_on": "BLE_MESH && !BLE_MESH_NO_LOG && BLE_MESH",
-                        "id": "component-config-esp-ble-mesh-support-ble-mesh-net-buf-debug-log-level-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-1215",
+                        "id": "component-config-esp-ble-mesh-support-ble-mesh-net-buf-debug-log-level-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-1214",
                         "title": "BLE Mesh NET BUF DEBUG LOG LEVEL",
                         "type": "menu"
                     },
@@ -15580,7 +15637,7 @@
                             }
                         ],
                         "depends_on": "BLE_MESH",
-                        "id": "component-config-esp-ble-mesh-support-support-for-ble-mesh-foundation-models-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-1264",
+                        "id": "component-config-esp-ble-mesh-support-support-for-ble-mesh-foundation-models-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-1263",
                         "title": "Support for BLE Mesh Foundation models",
                         "type": "menu"
                     },
@@ -15965,13 +16022,13 @@
                                             }
                                         ],
                                         "depends_on": "BLE_MESH",
-                                        "id": "component-config-esp-ble-mesh-support-support-for-ble-mesh-client-server-models-binary-larger-object-transfer-model-blob-models-common-configuration-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-1787",
+                                        "id": "component-config-esp-ble-mesh-support-support-for-ble-mesh-client-server-models-binary-larger-object-transfer-model-blob-models-common-configuration-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-1786",
                                         "title": "BLOB models common configuration",
                                         "type": "menu"
                                     }
                                 ],
                                 "depends_on": "BLE_MESH",
-                                "id": "component-config-esp-ble-mesh-support-support-for-ble-mesh-client-server-models-binary-larger-object-transfer-model-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-1677",
+                                "id": "component-config-esp-ble-mesh-support-support-for-ble-mesh-client-server-models-binary-larger-object-transfer-model-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-1676",
                                 "title": "Binary Larger Object Transfer model",
                                 "type": "menu"
                             },
@@ -16041,7 +16098,7 @@
                                             }
                                         ],
                                         "depends_on": "BLE_MESH",
-                                        "id": "component-config-esp-ble-mesh-support-support-for-ble-mesh-client-server-models-device-firmware-update-model-firmware-update-model-configuration-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-1821",
+                                        "id": "component-config-esp-ble-mesh-support-support-for-ble-mesh-client-server-models-device-firmware-update-model-firmware-update-model-configuration-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-1820",
                                         "title": "Firmware Update model configuration",
                                         "type": "menu"
                                     },
@@ -16129,13 +16186,13 @@
                                     }
                                 ],
                                 "depends_on": "BLE_MESH",
-                                "id": "component-config-esp-ble-mesh-support-support-for-ble-mesh-client-server-models-device-firmware-update-model-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-1807",
+                                "id": "component-config-esp-ble-mesh-support-support-for-ble-mesh-client-server-models-device-firmware-update-model-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-1806",
                                 "title": "Device Firmware Update model",
                                 "type": "menu"
                             }
                         ],
                         "depends_on": "BLE_MESH",
-                        "id": "component-config-esp-ble-mesh-support-support-for-ble-mesh-client-server-models-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-1536",
+                        "id": "component-config-esp-ble-mesh-support-support-for-ble-mesh-client-server-models-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-1535",
                         "title": "Support for BLE Mesh Client/Server models",
                         "type": "menu"
                     },
@@ -16345,7 +16402,7 @@
                             }
                         ],
                         "depends_on": "BLE_MESH",
-                        "id": "component-config-esp-ble-mesh-support-ble-mesh-specific-test-option-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-1940",
+                        "id": "component-config-esp-ble-mesh-support-ble-mesh-specific-test-option-home-manohar-esp-idf-components-bt-esp_ble_mesh-Kconfig.in-1939",
                         "title": "BLE Mesh specific test option",
                         "type": "menu"
                     },
@@ -17224,6 +17281,24 @@
                 "depends_on": "SOC_MIPI_CSI_SUPPORTED || SOC_ISP_DVP_SUPPORTED || SOC_LCDCAM_CAM_SUPPORTED",
                 "id": "component-config-esp-driver-camera-controller-configurations-home-manohar-esp-idf-components-esp_driver_cam-Kconfig-1",
                 "title": "ESP-Driver:Camera Controller Configurations",
+                "type": "menu"
+            },
+            {
+                "children": [
+                    {
+                        "children": [],
+                        "depends_on": "SOC_CORDIC_SUPPORTED",
+                        "help": "Place cordic oneshot function into IRAM so that cordic oneshot function\ncan be safely used in ISR even when cache is disabled.",
+                        "id": "CORDIC_ONESHOT_CTRL_FUNC_IN_IRAM",
+                        "name": "CORDIC_ONESHOT_CTRL_FUNC_IN_IRAM",
+                        "range": null,
+                        "title": "Place cordic oneshot calculation function into IRAM",
+                        "type": "bool"
+                    }
+                ],
+                "depends_on": "SOC_CORDIC_SUPPORTED",
+                "id": "component-config-esp-driver-cordic-configurations-home-manohar-esp-idf-components-esp_driver_cordic-Kconfig-1",
+                "title": "ESP-Driver:Cordic Configurations",
                 "type": "menu"
             },
             {
@@ -18627,16 +18702,6 @@
                         "type": "int"
                     },
                     {
-                        "children": [],
-                        "depends_on": "MBEDTLS_VER_4_X_SUPPORT",
-                        "help": "Migrate ESP HTTP Client to use PSA Crypto.",
-                        "id": "ESP_HTTP_CLIENT_PSA_CRYPTO_MIGRATE",
-                        "name": "ESP_HTTP_CLIENT_PSA_CRYPTO_MIGRATE",
-                        "range": null,
-                        "title": "Migrate ESP HTTP Client to use PSA Crypto",
-                        "type": "bool"
-                    },
-                    {
                         "children": [
                             {
                                 "children": [],
@@ -18787,16 +18852,6 @@
                         "name": "HTTPD_WS_POST_HANDSHAKE_CB_SUPPORT",
                         "range": null,
                         "title": "WebSocket post-handshake callback support",
-                        "type": "bool"
-                    },
-                    {
-                        "children": [],
-                        "depends_on": "MBEDTLS_VER_4_X_SUPPORT",
-                        "help": "Migrate ESP HTTP Server to use PSA Crypto.",
-                        "id": "HTTPD_SERVER_PSA_CRYPTO_MIGRATE",
-                        "name": "HTTPD_SERVER_PSA_CRYPTO_MIGRATE",
-                        "range": null,
-                        "title": "Migrate ESP HTTP Server to use PSA Crypto",
                         "type": "bool"
                     }
                 ],
@@ -20688,6 +20743,26 @@
                         "range": null,
                         "title": "Enable PHY Debug",
                         "type": "menu"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "SOC_IEEE802154_BLE_ONLY && ESP_PHY_ENABLED",
+                        "help": "Select this option to place esp_phy and PHY library functions related to phy_init in IRAM.\nThis config applies to ESP32-H2, ESP32-H21, and ESP32-H4.",
+                        "id": "ESP_PHY_INIT_IRAM",
+                        "name": "ESP_PHY_INIT_IRAM",
+                        "range": null,
+                        "title": "Place PHY (de)init in IRAM",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "ESP_PHY_ENABLED",
+                        "help": "Select to print PHY version in esp_phy_enable. This config only applies to esp32hxx for now.",
+                        "id": "ESP_PHY_ENABLE_VERSION_PRINT",
+                        "name": "ESP_PHY_ENABLE_VERSION_PRINT",
+                        "range": null,
+                        "title": "Print PHY version",
+                        "type": "bool"
                     }
                 ],
                 "depends_on": null,
@@ -35727,23 +35802,24 @@
                                     {
                                         "children": [
                                             {
-                                                "children": [],
+                                                "children": [
+                                                    {
+                                                        "children": [],
+                                                        "depends_on": "OPENTHREAD_PLATFORM_MALLOC_CAP_SPIRAM && (SPIRAM_USE_CAPS_ALLOC || SPIRAM_USE_MALLOC) && OPENTHREAD_ENABLED",
+                                                        "help": "If enabled, the message pool is managed by platform defined logic.",
+                                                        "id": "OPENTHREAD_PLATFORM_MSGPOOL_MANAGEMENT",
+                                                        "name": "OPENTHREAD_PLATFORM_MSGPOOL_MANAGEMENT",
+                                                        "range": null,
+                                                        "title": "Allocate message pool buffer from PSRAM",
+                                                        "type": "bool"
+                                                    }
+                                                ],
                                                 "depends_on": "(SPIRAM_USE_CAPS_ALLOC || SPIRAM_USE_MALLOC) && OPENTHREAD_ENABLED",
                                                 "help": "Select this option to allocate buffer from PSRAM for Thread",
                                                 "id": "OPENTHREAD_PLATFORM_MALLOC_CAP_SPIRAM",
                                                 "name": "OPENTHREAD_PLATFORM_MALLOC_CAP_SPIRAM",
                                                 "range": null,
                                                 "title": "Allocate memory from PSRAM",
-                                                "type": "bool"
-                                            },
-                                            {
-                                                "children": [],
-                                                "depends_on": "(SPIRAM_USE_CAPS_ALLOC || SPIRAM_USE_MALLOC) && OPENTHREAD_ENABLED",
-                                                "help": "If enabled, the message pool is managed by platform defined logic.",
-                                                "id": "OPENTHREAD_PLATFORM_MSGPOOL_MANAGEMENT",
-                                                "name": "OPENTHREAD_PLATFORM_MSGPOOL_MANAGEMENT",
-                                                "range": null,
-                                                "title": "Allocate message pool buffer from PSRAM",
                                                 "type": "bool"
                                             }
                                         ],
@@ -35788,7 +35864,7 @@
                                                     }
                                                 ],
                                                 "depends_on": "OPENTHREAD_ENABLED",
-                                                "id": "component-config-openthread-openthread-thread-core-features-openthread-stack-parameters-thread-address-query-config-home-manohar-esp-idf-components-openthread-Kconfig-446",
+                                                "id": "component-config-openthread-openthread-thread-core-features-openthread-stack-parameters-thread-address-query-config-home-manohar-esp-idf-components-openthread-Kconfig-447",
                                                 "title": "Thread Address Query Config",
                                                 "type": "menu"
                                             },
@@ -35884,7 +35960,7 @@
                                             }
                                         ],
                                         "depends_on": "OPENTHREAD_ENABLED",
-                                        "id": "component-config-openthread-openthread-thread-core-features-openthread-stack-parameters-home-manohar-esp-idf-components-openthread-Kconfig-444",
+                                        "id": "component-config-openthread-openthread-thread-core-features-openthread-stack-parameters-home-manohar-esp-idf-components-openthread-Kconfig-445",
                                         "title": "OpenThread Stack Parameters",
                                         "type": "menu"
                                     }
@@ -35971,7 +36047,7 @@
                                         ],
                                         "depends_on": "!OPENTHREAD_LOG_LEVEL_DYNAMIC && OPENTHREAD_ENABLED",
                                         "help": "Select OpenThread log level.",
-                                        "id": "component-config-openthread-openthread-thread-log-openthread-log-verbosity-home-manohar-esp-idf-components-openthread-Kconfig-520",
+                                        "id": "component-config-openthread-openthread-thread-log-openthread-log-verbosity-home-manohar-esp-idf-components-openthread-Kconfig-521",
                                         "name": "OPENTHREAD_LOG_LEVEL",
                                         "title": "OpenThread log verbosity",
                                         "type": "choice"
@@ -35988,7 +36064,7 @@
                                     }
                                 ],
                                 "depends_on": "OPENTHREAD_ENABLED",
-                                "id": "component-config-openthread-openthread-thread-log-home-manohar-esp-idf-components-openthread-Kconfig-512",
+                                "id": "component-config-openthread-openthread-thread-log-home-manohar-esp-idf-components-openthread-Kconfig-513",
                                 "title": "Thread Log",
                                 "type": "menu"
                             },
@@ -36020,7 +36096,7 @@
                                                     }
                                                 ],
                                                 "depends_on": "OPENTHREAD_HEADER_CUSTOM && OPENTHREAD_ENABLED",
-                                                "id": "component-config-openthread-openthread-thread-extensioned-features-use-a-header-file-defined-by-customer-openthread-custom-header-config-home-manohar-esp-idf-components-openthread-Kconfig-567",
+                                                "id": "component-config-openthread-openthread-thread-extensioned-features-use-a-header-file-defined-by-customer-openthread-custom-header-config-home-manohar-esp-idf-components-openthread-Kconfig-568",
                                                 "title": "OpenThread Custom Header Config",
                                                 "type": "menu"
                                             }
@@ -36035,7 +36111,7 @@
                                     }
                                 ],
                                 "depends_on": "OPENTHREAD_ENABLED",
-                                "id": "component-config-openthread-openthread-thread-extensioned-features-home-manohar-esp-idf-components-openthread-Kconfig-552",
+                                "id": "component-config-openthread-openthread-thread-extensioned-features-home-manohar-esp-idf-components-openthread-Kconfig-553",
                                 "title": "Thread Extensioned Features",
                                 "type": "menu"
                             }
@@ -36082,7 +36158,7 @@
                             }
                         ],
                         "depends_on": null,
-                        "id": "component-config-openthread-openthread-spinel-home-manohar-esp-idf-components-openthread-Kconfig-586",
+                        "id": "component-config-openthread-openthread-spinel-home-manohar-esp-idf-components-openthread-Kconfig-587",
                         "title": "OpenThread Spinel",
                         "type": "menu"
                     },
@@ -36096,6 +36172,27 @@
                                 "name": "OPENTHREAD_DUMP_MAC_ON_ASSERT",
                                 "range": null,
                                 "title": "Dump 802.15.4 MAC debug info on OpenThread assert",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [
+                                    {
+                                        "children": [],
+                                        "depends_on": "OPENTHREAD_TASK_BLOCK_MONITOR",
+                                        "help": "Set the timeout (in seconds) for detecting a blocked task.\nThe timer is started at the beginning of each task main loop\nand stopped at the end. If the timer expires, the task is considered blocked.",
+                                        "id": "OPENTHREAD_TASK_BLOCK_MONITOR_TIMEOUT",
+                                        "name": "OPENTHREAD_TASK_BLOCK_MONITOR_TIMEOUT",
+                                        "range": null,
+                                        "title": "Task Block Monitor Timeout (seconds)",
+                                        "type": "int"
+                                    }
+                                ],
+                                "depends_on": "OPENTHREAD_DEBUG",
+                                "help": "Enable monitoring of OpenThread tasks to detect if a task is blocked\nand unable to continue its normal execution loop. Useful for debugging\nissues where tasks stop progressing due to deadlocks or resource waits.\nOn RISC-V targets, in order to get meaningful backtraces when a task is\ndetected as blocked, ESP_SYSTEM_USE_FRAME_POINTER must be enabled in\nESP System Settings -> Backtracing method.",
+                                "id": "OPENTHREAD_TASK_BLOCK_MONITOR",
+                                "name": "OPENTHREAD_TASK_BLOCK_MONITOR",
+                                "range": null,
+                                "title": "Enable OpenThread Task Block Monitor",
                                 "type": "bool"
                             }
                         ],
@@ -37258,7 +37355,7 @@
                                 "children": [
                                     {
                                         "children": [],
-                                        "depends_on": "SOC_ULP_FSM_SUPPORTED && <choice ULP_COPROC_TYPE>",
+                                        "depends_on": "SOC_ULP_FSM_SUPPORTED && ULP_COPROC_ENABLED && (SOC_ULP_SUPPORTED || SOC_RISCV_COPROC_SUPPORTED || SOC_LP_CORE_SUPPORTED)",
                                         "help": null,
                                         "id": "ULP_COPROC_TYPE_FSM",
                                         "name": "ULP_COPROC_TYPE_FSM",
@@ -37268,7 +37365,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "SOC_RISCV_COPROC_SUPPORTED && <choice ULP_COPROC_TYPE>",
+                                        "depends_on": "SOC_RISCV_COPROC_SUPPORTED && ULP_COPROC_ENABLED && (SOC_ULP_SUPPORTED || SOC_RISCV_COPROC_SUPPORTED || SOC_LP_CORE_SUPPORTED)",
                                         "help": null,
                                         "id": "ULP_COPROC_TYPE_RISCV",
                                         "name": "ULP_COPROC_TYPE_RISCV",
@@ -37278,7 +37375,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "SOC_LP_CORE_SUPPORTED && <choice ULP_COPROC_TYPE>",
+                                        "depends_on": "SOC_LP_CORE_SUPPORTED && ULP_COPROC_ENABLED && (SOC_ULP_SUPPORTED || SOC_RISCV_COPROC_SUPPORTED || SOC_LP_CORE_SUPPORTED)",
                                         "help": null,
                                         "id": "ULP_COPROC_TYPE_LP_CORE",
                                         "name": "ULP_COPROC_TYPE_LP_CORE",
@@ -37288,11 +37385,9 @@
                                     }
                                 ],
                                 "depends_on": "ULP_COPROC_ENABLED && (SOC_ULP_SUPPORTED || SOC_RISCV_COPROC_SUPPORTED || SOC_LP_CORE_SUPPORTED)",
-                                "help": "Choose the ULP Coprocessor type: ULP FSM (Finite State Machine) or ULP RISC-V.",
-                                "id": "component-config-ultra-low-power-ulp-co-processor-enable-ultra-low-power-ulp-co-processor-ulp-co-processor-type-home-manohar-esp-idf-components-ulp-Kconfig-11",
-                                "name": "ULP_COPROC_TYPE",
-                                "title": "ULP Co-processor type",
-                                "type": "choice"
+                                "id": "component-config-ultra-low-power-ulp-co-processor-enable-ultra-low-power-ulp-co-processor-ulp-coprocessor-types-home-manohar-esp-idf-components-ulp-Kconfig-11",
+                                "title": "ULP Coprocessor types",
+                                "type": "menu"
                             },
                             {
                                 "children": [],
@@ -37347,7 +37442,7 @@
                             }
                         ],
                         "depends_on": "ULP_COPROC_TYPE_RISCV && (SOC_ULP_SUPPORTED || SOC_RISCV_COPROC_SUPPORTED || SOC_LP_CORE_SUPPORTED)",
-                        "id": "component-config-ultra-low-power-ulp-co-processor-ulp-risc-v-settings-home-manohar-esp-idf-components-ulp-Kconfig-43",
+                        "id": "component-config-ultra-low-power-ulp-co-processor-ulp-risc-v-settings-home-manohar-esp-idf-components-ulp-Kconfig-44",
                         "title": "ULP RISC-V Settings",
                         "type": "menu"
                     },
@@ -37415,7 +37510,7 @@
                             }
                         ],
                         "depends_on": "SOC_ULP_SUPPORTED || SOC_RISCV_COPROC_SUPPORTED || SOC_LP_CORE_SUPPORTED",
-                        "id": "component-config-ultra-low-power-ulp-co-processor-ulp-debugging-options-home-manohar-esp-idf-components-ulp-Kconfig-104",
+                        "id": "component-config-ultra-low-power-ulp-co-processor-ulp-debugging-options-home-manohar-esp-idf-components-ulp-Kconfig-105",
                         "title": "ULP Debugging Options",
                         "type": "menu"
                     }
@@ -37570,34 +37665,6 @@
                                 ],
                                 "title": "Maximum Number of Virtual Filesystems",
                                 "type": "int"
-                            },
-                            {
-                                "children": [
-                                    {
-                                        "children": [],
-                                        "depends_on": "VFS_SUPPORT_IO",
-                                        "help": "Define maximum number of host filesystem mount points.",
-                                        "id": "VFS_SEMIHOSTFS_MAX_MOUNT_POINTS",
-                                        "name": "VFS_SEMIHOSTFS_MAX_MOUNT_POINTS",
-                                        "range": null,
-                                        "title": "Host FS: Maximum number of the host filesystem mount points",
-                                        "type": "int"
-                                    }
-                                ],
-                                "depends_on": "VFS_SUPPORT_IO",
-                                "id": "component-config-virtual-file-system-provide-basic-i-o-functions-host-file-system-i-o-semihosting--home-manohar-esp-idf-components-vfs-Kconfig-90",
-                                "title": "Host File System I/O (Semihosting)",
-                                "type": "menu"
-                            },
-                            {
-                                "children": [],
-                                "depends_on": "VFS_SUPPORT_IO",
-                                "help": "If enabled, /dev/null VFS will be automatically initialized at startup.",
-                                "id": "VFS_INITIALIZE_DEV_NULL",
-                                "name": "VFS_INITIALIZE_DEV_NULL",
-                                "range": null,
-                                "title": "Initialize /dev/null VFS",
-                                "type": "bool"
                             }
                         ],
                         "depends_on": null,
@@ -37606,6 +37673,44 @@
                         "name": "VFS_SUPPORT_IO",
                         "range": null,
                         "title": "Provide basic I/O functions",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": null,
+                        "help": "The VFS APIs without context pointer are deprecated and will be removed in the next major release.\nPlease switch to the APIs with context pointer,\nor alternatively enable this option to silence the warning.",
+                        "id": "VFS_SUPPRESS_CTX_DEPRECATION",
+                        "name": "VFS_SUPPRESS_CTX_DEPRECATION",
+                        "range": null,
+                        "title": "Suppress context-less API deprecation warning",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": [],
+                                "depends_on": "VFS_SUPPORT_IO",
+                                "help": "Define maximum number of host filesystem mount points.",
+                                "id": "VFS_SEMIHOSTFS_MAX_MOUNT_POINTS",
+                                "name": "VFS_SEMIHOSTFS_MAX_MOUNT_POINTS",
+                                "range": null,
+                                "title": "Host FS: Maximum number of the host filesystem mount points",
+                                "type": "int"
+                            }
+                        ],
+                        "depends_on": "VFS_SUPPORT_IO",
+                        "id": "component-config-virtual-file-system-host-file-system-i-o-semihosting--home-manohar-esp-idf-components-vfs-Kconfig-97",
+                        "title": "Host File System I/O (Semihosting)",
+                        "type": "menu"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "VFS_SUPPORT_IO",
+                        "help": "If enabled, /dev/null VFS will be automatically initialized at startup.",
+                        "id": "VFS_INITIALIZE_DEV_NULL",
+                        "name": "VFS_INITIALIZE_DEV_NULL",
+                        "range": null,
+                        "title": "Initialize /dev/null VFS",
                         "type": "bool"
                     }
                 ],

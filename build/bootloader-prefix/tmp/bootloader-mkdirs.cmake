@@ -5,18 +5,18 @@ cmake_minimum_required(VERSION 3.5)
 
 file(MAKE_DIRECTORY
   "/home/manohar/esp-idf/components/bootloader/subproject"
-  "/home/manohar/bt-headphones/build/bootloader"
-  "/home/manohar/bt-headphones/build/bootloader-prefix"
-  "/home/manohar/bt-headphones/build/bootloader-prefix/tmp"
-  "/home/manohar/bt-headphones/build/bootloader-prefix/src/bootloader-stamp"
-  "/home/manohar/bt-headphones/build/bootloader-prefix/src"
-  "/home/manohar/bt-headphones/build/bootloader-prefix/src/bootloader-stamp"
+  "/home/manohar/projects/esp32/bt-headphones/build/bootloader"
+  "/home/manohar/projects/esp32/bt-headphones/build/bootloader-prefix"
+  "/home/manohar/projects/esp32/bt-headphones/build/bootloader-prefix/tmp"
+  "/home/manohar/projects/esp32/bt-headphones/build/bootloader-prefix/src/bootloader-stamp"
+  "/home/manohar/projects/esp32/bt-headphones/build/bootloader-prefix/src"
+  "/home/manohar/projects/esp32/bt-headphones/build/bootloader-prefix/src/bootloader-stamp"
 )
 
 set(configSubDirs )
 foreach(subDir IN LISTS configSubDirs)
-    file(MAKE_DIRECTORY "/home/manohar/bt-headphones/build/bootloader-prefix/src/bootloader-stamp/${subDir}")
+    file(MAKE_DIRECTORY "/home/manohar/projects/esp32/bt-headphones/build/bootloader-prefix/src/bootloader-stamp/${subDir}")
 endforeach()
 if(cfgdir)
-  file(MAKE_DIRECTORY "/home/manohar/bt-headphones/build/bootloader-prefix/src/bootloader-stamp${cfgdir}") # cfgdir has leading slash
+  file(MAKE_DIRECTORY "/home/manohar/projects/esp32/bt-headphones/build/bootloader-prefix/src/bootloader-stamp${cfgdir}") # cfgdir has leading slash
 endif()

@@ -1508,6 +1508,25 @@ rule C_STATIC_LIBRARY_LINKER____idf_esp_adc_
 #############################################
 # Rule for compiling C files.
 
+rule C_COMPILER____idf_esp_blockdev_util_unscanned_
+  depfile = $DEP_FILE
+  deps = gcc
+  command = ${LAUNCHER}${CODE_CHECK}/home/manohar/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  description = Building C object $out
+
+
+#############################################
+# Rule for linking C static library.
+
+rule C_STATIC_LIBRARY_LINKER____idf_esp_blockdev_util_
+  command = $PRE_LINK && /usr/bin/cmake -E rm -f $TARGET_FILE && /home/manohar/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/bin/xtensa-esp32-elf-ar qc $TARGET_FILE $LINK_FLAGS $in && /home/manohar/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/bin/xtensa-esp32-elf-ranlib $TARGET_FILE && $POST_BUILD
+  description = Linking C static library $TARGET_FILE
+  restat = $RESTAT
+
+
+#############################################
+# Rule for compiling C files.
+
 rule C_COMPILER____idf_esp_driver_cam_unscanned_
   depfile = $DEP_FILE
   deps = gcc
@@ -2364,7 +2383,7 @@ rule C_STATIC_LIBRARY_LINKER____idf_main_
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /usr/bin/cmake --regenerate-during-build -S/home/manohar/bt-headphones -B/home/manohar/bt-headphones/build
+  command = /usr/bin/cmake --regenerate-during-build -S/home/manohar/projects/esp32/bt-headphones -B/home/manohar/projects/esp32/bt-headphones/build
   description = Re-running CMake...
   generator = 1
 
